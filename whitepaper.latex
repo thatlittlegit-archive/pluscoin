@@ -129,6 +129,13 @@ repeated. A node should also detect if the transaction is inside of its
 K-bucket, and if so propagate to another K-bucket. If it came from another
 K-bucket, it should be propagated to the same K-bucket, {\it{et cetra}}.
 
+\paragraph{Ordering of Transactions in a Block.} Transactions in a block are
+to be ordered in the order they are recieved. Should multiple transactions be
+sent in a \verb|Transaction[]|, they shall be inputted in the order in the
+array. If multiple transactions arrive separately yet simultaniously they are
+to be appended in the order that they are processed.\footnote{This would be
+easiest in a single-threaded recieving area, where one comes in at a time.}
+
 \paragraph{Verifying a Transaction.} A transaction is to be verified by first
 checking if the chain identifier (chainid) is equal to what is
 expected\footnote{$0$ shall be used on the main network.}. It shall also be
