@@ -182,6 +182,17 @@ on the matter, a GenericMessage containing "{\texttt{REBUILD\_CHAIN}}" shall be
 considered a note to update the chain. However, some implementations may ignore
 this. It is still acceptable to claim to be Pluscoin without implementing this.}
 
+\paragraph{Syncing the Blockchain.} The blockchain is to be synced (rebuilt) by
+contacting the 3 nearest K-Buckets and sending a GenericMessage containing
+"{\texttt{BLOCKHASH}}", which shall be responded to by sending the hash of the
+{\it{previous transaction}}, not the $x$ transactions before. Another
+GenericMessage "{\texttt{REQUEST\_CHAIN {\it{p}}}" shall then be sent to
+$\frac{1}{3}$ of the nearest 4 K-buckets, which shall respond with as up to
+65536 transactions starting at number $p$ via a Brotli-compressed JSON array in
+the form of a \verb|Block[65536]|. The response shall be at most $2^{32}$ bytes
+in length. The uncompressed` shall also be RSA-signed with the private key of
+the sender.
+
 \section{Classes \& Structs.}
 \paragraph{Some notes.} The classes and structs defined herein should be used
 vertabim. It is entirely possible, indeed recommendable, to change these to fit
