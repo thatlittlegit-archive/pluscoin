@@ -57,17 +57,9 @@ is found. If there are multiple matches, the one with the most currency on the
 is to be the lucky stakeholder.
 
 \paragraph{Rewards.} The user who is found to be the stakeholder of a block
-shall recieve $c$ currency, where $c$ can be calculated as (with
-$b = \textrm{number of transactions}$):
-
-\begin{equation}
-	c = \dfrac{b^2}{(b \textrm{ mod } 128) + 256}
-\end{equation}
-
-As such, with 100 transactions the user would recieve $c = \frac{b^2}{100 + 256}
-= \frac{b^2}{356} = \frac{10000}{356} \approx 28.089$ currency. This currency
-shall not be represented in a 'transaction'; rather, it should be implied when
-a block's stakeholder is the user they gain $c$ in their wallet.
+shall recieve $2.5$ currency. This currency shall not be represented in a
+'transaction'; rather, it should be implied when a block's stakeholder is the
+user they gain $2.5$ currency in their wallet.
 
 \label{p2p}
 \section{Peer-To-Peer Network and Transactions.}
