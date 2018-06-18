@@ -32,9 +32,7 @@ user in question {\it{should}} calculate itself. We can find the user by
 finding the SHA3-512 hash of the previous $x$ transactions (with
 $b=\textrm{number of transactions}$):
 
-\begin{equation}
-	x = 8 + \lfloor \dfrac{b}{256} \rceil
-\end{equation}
+$$x = 8 + \lfloor \dfrac{b}{256} \rceil$$
 
 Assume we are on the 364$^{th}$ transaction. We would find $x = 8 + \lfloor
 1.421875 \rceil = 8 + 1 = 9$, thus the SHA3-512 of the 9 previous
