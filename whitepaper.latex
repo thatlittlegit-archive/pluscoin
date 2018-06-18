@@ -15,11 +15,9 @@
 \pagenumbering{arabic}
 
 \section{Introduction.}
-Pluscoin is a cryptocurrency intended to a) not be related to Bitcoin and b)
-use modern methods for consensus and mining. It uses Proof of Activity\footnote{
-	See \url{https://bitcointalk.org/?topic=102355}}
-by Charlie Lee as a consensus model. This document states the requirements for
-an implementation of Pluscoin.
+Pluscoin is a cryptocurrency intended to be easy to use and not use as many
+resources as Bitcoin and its derivatives in mining. This document states the
+requirements for an implementation of Pluscoin.
 
 \paragraph{The example implementation.} The example implementation is written
 in GNU Guile\footnote{See \url{https://gnu.org/software/guile}}, so as to be
@@ -284,14 +282,15 @@ Pluscoin was built as a cryptocurrency that was not based on Bitcoin, Litecoin,
 Ethereum, etc. I also wanted to make sure that the number of hashes that are
 necessary to generate was a minimum.
 
-In the first paragraph, you may recall:
+In the first paragraph of Pluscoin 1.0-beta0, you may recall:
 
 \begin{quote}
 	It uses Proof of Activity$^1$ by Charlie Lee as a consensus model.
 \end{quote}
 
 This was true when I began writing the paper. However, as Pluscoin evolved, it
-grew away from PoA. It, in my opinion, shows how Pluscoin evolved.
+grew away from PoA, deprecating it altogether. It shows how Pluscoin evolved
+from a small PoA implementation to a custom cryptocurrency.
 
 Farewell, reader. I hope Pluscoin... y'know, works. And can't be counterfeited.
 
