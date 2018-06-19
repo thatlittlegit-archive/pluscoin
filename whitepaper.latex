@@ -75,27 +75,17 @@ Alice and Bob, then add the transaction to their block. It is then
 redistributed as stated in \S\ref{p2p}, \P\ref{prop}, except as a transaction
 not a block.
 
-\paragraph{Special Transactions.} Transactions to 
-{\texttt{00112233445566778899AABBCCDDEE\-FF00112233445566778899AABBCCDDEE00}}
-are considered 'special': these are for creation of additional wallets, etc.
-They should be distributed, but {\it{not}} counted in the hash-generation
-process. It may be advisable to represent these initially into Transactions,
-and then transform them into internal objects with less memory which can be
-reverted as necessary into Transactions. Sending $0$ currency to the address
-with a description of one of the following is then interpreted as the
-corresponding action:
-
-\begin{itemize}
-	\item \verb|@<user>*<pubkey>|: Creates a new user \verb|<user>| with
-		a wallet public-key of \verb|<pubkey>|, which is a ASCII85\-
-		encoded version of her public key. Her wallet hash is to
-		be the SHA3-512 hash of \verb|<pubkey>|. \verb|<user>| may be
-		at most 3 characters long, and is {\it{not intended to be
-		unique!}}.
-\end{itemize}
-\begin{center}
-	{\it{As of yet, no further special transactions exist.}}
-\end{center}
+\paragraph{Account Creation.} Transactions to 
+{\texttt{F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F}}
+are considered to create accounts. A transaction to this account MUST have a
+description matching the regular expression \verb~[a-zA-Z0-9_-]*|[!"#$%&'()*+,-./0-9:;<=>?@A-Z[\\]^_`a-u]+~.
+The part preceding the pipe shall be considered the username. As a result of
+the wildcard, if the username is blank (nothing preceding the pipe) then it
+shall be an unnamed account. Implementations must not fail on such an account.
+The second part shall be a ASCII85-encoded version of the public key. The
+wallet hash is to be the SHA3-512 hash of the second component (following the
+pipe). If a wallet exists already with the calculated hash then a \verb|*| is
+to be added to the end of the ASCII85 that is hashed.
 
 \label{prop}
 \paragraph{Propagating a Block.} A signed block is to be sent to all
