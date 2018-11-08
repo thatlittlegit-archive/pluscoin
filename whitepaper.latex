@@ -184,8 +184,9 @@ implementing these modifications.
 			This is intended for future versions, which may use different
 			cryptographic methods. 0 will always indicate RSA.
 		}.
-	\item \verb|signature| (\verb|Si|, string[320]): The signed hash using the
-		OEAP padding scheme\footnote{See IETF RFC 2437.} and RSA encryption.
+	\item \verb|signature| (\verb|Si|, string[320]): When \verb|__VERSION__| is
+		\verb|0|, the PKCS\#1 2.2 RSASSA-PSS/EMSA-PSS algorithm with SHA-512
+		shall be executed upon the transaction.
 	\item \verb|transaction| (\verb|Tr|, Transaction): The transaction.
 \end{itemize}
 
