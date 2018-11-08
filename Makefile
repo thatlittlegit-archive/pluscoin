@@ -1,5 +1,5 @@
 whitepaper.pdf: whitepaper.latex
-	make whitepaper.dvi
+	latex whitepaper.latex
 	pdflatex whitepaper.latex
 
 whitepaper.dvi: whitepaper.latex
@@ -7,4 +7,4 @@ whitepaper.dvi: whitepaper.latex
 	latex whitepaper.latex
 
 clean:
-	-rm $(wildcard *.aux *.log *.dvi *.pdf *.toc)
+	-rm -f whitepaper.aux whitepaper.log whitepaper.dvi whitepaper.pdf whitepaper.toc
