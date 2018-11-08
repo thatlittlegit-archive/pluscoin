@@ -29,14 +29,8 @@ implementation.
 \section{Choosing the Lucky Stakeholder.}
 The lucky stakeholder shall be chosen {\it{individually}} by each user, and the
 user in question {\it{should}} calculate itself. We can find the user by
-finding the SHA3-512 hash of the previous $x$ transactions (with
-$b=\textrm{number of transactions}$):
-
-$$x = 8 + \lfloor \dfrac{b}{256} \rceil$$
-
-Assume we are on the 364$^{th}$ transaction. We would find $x = 8 + \lfloor
-1.421875 \rceil = 8 + 1 = 9$, thus the SHA3-512 of the 9 previous
-transactions ought to be calculated.
+finding the SHA3-512 hash of the previous 15 transactions, in minified JSON2
+format.
 
 \paragraph{The generation of the SHA3-512 hashes.} The hashes shall be generated
 by finding the oldest block in the chain that shall be calculated, calculating
