@@ -177,27 +177,20 @@ implementing these modifications.
 		the transaction in UTF-8 format.
 \end{itemize}
 
-\paragraph{HashedTransaction} {\it{extends}} HashedObject
+\paragraph{HashedTransaction}
 \begin{itemize}
 	\item \verb|__STRUCT__| (\verb|__|, byte): Always \verb|10|.
+	\item \verb|__VERSION__| (\verb|_V|, byte): Always \verb|0|\footnote{
+			This is intended for future versions, which may use different
+			cryptographic methods. 0 will always indicate RSA.
+		}.
+	\item \verb|signature| (\verb|Si|, string[320]): The signed hash using the
+		OEAP padding scheme\footnote{See IETF RFC 2437.} and RSA encryption.
 	\item \verb|transaction| (\verb|Tr|, Transaction): The transaction.
 \end{itemize}
 
-\paragraph{HashedObject} (shall never be distributed)
-\begin{itemize}
-	\item \verb|__VERSION__| (\verb|_V|, byte): Always \verb|0|\footnote{
-			This is intended for future versions, which may use
-			elliptic-curve cryptography. 0 will always indicate
-			RSA. (RSA may also be phased out, and as such be
-			denied; however, this should not be fretted about
-			now.)}.
-	\item \verb|signature| (\verb|Si|, string[320]): The signed hash using
-		the OAEP padding scheme\footnote{See IETF RFC 2437.} and RSA
-		encryption.
-\end{itemize}
-
 \paragraph{GenericMessage} (shall never be broadcasted; broadcasted messages
-shall be discarded)
+shall be discarded. Can be sent to a single party.)
 \begin{itemize}
 	\item \verb|__STRUCT__| (\verb|__|, byte): Always \verb|9|.
 	\item \verb|message| (\verb|Me|, string[1024]): The message sent.
