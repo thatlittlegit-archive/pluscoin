@@ -42,38 +42,35 @@ transaction shall recieve $2.5$ currency. This currency shall not be
 represented in a 'transaction'; rather, it should be implied when a
 transaction's stakeholder is the user they gain $2.5$ currency in their wallet.
 
-\label{p2p}
-\section{Peer-To-Peer Network and Transactions.}
+\label{net}
+\section{Networking.}
 A Peer-to-Peer (hereforth referred to as P2P) network is necessary for a
-decenteralized currency. As such, Pluscoin uses the Kademlia hash-table to
-manage the synchronisation of transactions.
+decenteralized currency. Pluscoin uses an HTTP API to communicate. All data to
+or from this API should be in JSON\footnote{See \url{https://json.org}}.
 
 \paragraph{Creating a Transaction.} To create a transaction, the sender (Alice)
 broadcasts to all nodes she knows that she has a transaction to the recipient
 (Bob), in the form of a SignedTransaction. This SignedTransaction consists of
-the Transaction, as well as a signed hash of the transaction. This hash is
-then signed with Alice's private key, and then redistributed as stated in
-\S\ref{p2p}, \P\ref{prop}.
+the Transaction, as well as a hash of the transaction in hexadecimal. This hash is
+then signed with Alice's private key, and then redistributed.
 
-\paragraph{Account Creation.} Transactions to 
+\paragraph{Account Creation.} Transactions to account
 {\texttt{F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F}}
 are considered to create accounts. A transaction to this account MUST have a
-description matching the regular expression \verb~[a-zA-Z0-9_-]*|[!"#$%&'()*+,-./0-9:;<=>?@A-Z[\\]^_`a-u]+~.
+description matching the regular expression \verb~[a-zA-Z0-9_-]*|[a-zA-Z0-9+/=]+~
 The part preceding the pipe shall be considered the username. As a result of
 the wildcard, if the username is blank (nothing preceding the pipe) then it
 shall be an unnamed account. Implementations must not fail on such an account.
-The second part shall be a ASCII85-encoded version of the public key. The
+The second part shall be a Base64-encoded version of the public key. The
 wallet hash is to be the hash of this. If a wallet exists already with the
 calculated hash then the account shall not be created.
 
 \label{prop}
 \paragraph{Propagating a Transaction.} A signed transaction is to be sent to all
-nodes in the K-bucket. All nodes recieving this transaction are then to validate
+known nodes. All nodes recieving this transaction are then to validate
 it; if the transactions is incorrect, the transaction is to be {\it{discarded}}
 and {\it{not propagated!}} However, if it is deemed valid the transaction is to
-be propagated. A node should also detect if the transaction is inside of its
-K-bucket, and if so propagate to another K-bucket.  If it came from another
-K-bucket, it should be propagated to the node's K-bucket.
+be propagated.
 
 \paragraph{Verifying a Transaction.} A transaction is to be verified by first
 checking if the chain identifier (chainid) is equal to what is
@@ -113,11 +110,11 @@ necessary. This {\it{can}} be ignored, and {\it{can}} be not sent by an
 implementation.}.
 
 \paragraph{Syncing the Chain.} The chain is to be synced (rebuilt) by
-contacting the 3 nearest K-Buckets and sending a GenericMessage containing
+contacting all known nodes and sending a GenericMessage containing
 "{\texttt{BLOCKHASH}}", which shall be responded to by sending the hash of the
 {\it{previous transaction}}, not the $x$ transactions before. Another
 GenericMessage "{\texttt{REQUEST\_CHAIN {\it{p}}}" shall then be sent to
-$\frac{1}{3}$ of the nearest 4 K-buckets, which shall respond with as up to
+all known nodes, which shall respond with as up to
 65536 transactions starting at number $p$ via a Brotli-compressed JSON array in
 the form of a \verb|Transaction[65536]|. The response shall be at most
 $2^{32}$ bytes in length. The uncompressed` shall also be RSA-signed with the
@@ -154,7 +151,7 @@ modifications.
 \begin{itemize}
 	\item \verb|__STRUCT__| (byte): Always \verb|0|.
 	\item \verb|sender| (string[320]): The sender's public key
-		in ASCII85.
+		in Base64.
 	\item \verb|recipient| (string[64]): The hash of
 		the recipient's public key.
 	\item \verb|currency| (double): The currency to send, cut to
