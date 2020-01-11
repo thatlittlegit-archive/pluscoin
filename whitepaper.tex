@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{url}
+\usepackage{listings}
 
 \title{The Pluscoin Cryptocurrency}
 \author{thatlittlegit}
@@ -134,45 +135,39 @@ differentiated by the \verb|__STRUCT__|  byte.
 used. All clients must support these, and accept structs not implementing these
 modifications.
 
-\paragraph{Format of Documentation.} The documentation is formatted as follows:
-\begin{itemize}
-	\item \verb|name| (type): description
-\end{itemize}
+\paragraph{Definitions.} The definitions are provided as Protocol
+Buffers\footnote{See
+\url{https://developers.google.com/protocol-buffers/docs/proto3}}.
+\begin{lstlisting}
+syntax = "proto3";
+\end{lstlisting}
 
-\begin{center}
-	{\bf{* * *}}
-\end{center}
+\subsection{Transaction}
+\begin{lstlisting}
+message Transaction {
+	required string sender;    // The sender's public key in Base64
+	required string recipient; // The hash of the recipient's public key
+	required double currency;  // The currency to send. No more than 16 decimal points.
+	required string message;   // The associated message in UTF-8.
+}
+\end{lstlisting}
 
-\paragraph{Transaction}
-\begin{itemize}
-	\item \verb|__STRUCT__| (byte): Always \verb|0|.
-	\item \verb|sender| (string[320]): The sender's public key
-		in Base64.
-	\item \verb|recipient| (string[64]): The hash of
-		the recipient's public key.
-	\item \verb|currency| (double): The currency to send, cut to
-		16 decimal points.
-	\item \verb|message| (string[256]): The message accompanying
-		the transaction in UTF-8 format.
-\end{itemize}
+\subsection{HashedTransaction}
+\begin{lstlisting}
+message HashedTransaction {
+	enum CryptoType {
+		RSA = 0;
+	}
+	required CryptoType version;
+	required string signature;
+	required Transaction transaction;
+}
+\end{lstlisting}
 
-\paragraph{HashedTransaction}
-\begin{itemize}
-	\item \verb|__STRUCT__| (byte): Always \verb|10|.
-	\item \verb|__VERSION__| (byte): Always \verb|0|\footnote{
-			This is intended for future versions, which may use different
-			cryptographic methods. 0 will always indicate RSA.
-		}.
-	\item \verb|signature| (string[320]): When \verb|__VERSION__| is
-		\verb|0|, the PKCS\#1 2.2 RSASSA-PSS/EMSA-PSS algorithm with SHA-512
-		shall be executed upon the transaction.
-	\item \verb|transaction| (Transaction): The transaction.
-\end{itemize}
-
-\paragraph{GenericMessage} (shall never be broadcasted; broadcasted messages
-shall be discarded. Can be sent to a single party.)
-\begin{itemize}
-	\item \verb|__STRUCT__| (byte): Always \verb|9|.
-	\item \verb|message| (string[1024]): The message sent.
-\end{itemize}
+\subsection{GenericMessage}
+\begin{lstlisting}
+message GenericMessage {
+	required string message;
+}
+\end{lstlisting}
 \end{document}
