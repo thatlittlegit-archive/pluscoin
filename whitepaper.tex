@@ -46,7 +46,7 @@ or from this API should be in JSON\footnote{See \url{https://json.org}}.
 
 \paragraph{Creating a Transaction.} To create a transaction, the sender (Alice)
 broadcasts to all nodes she knows that she has a transaction to the recipient
-(Bob), in the form of a SignedTransaction. This SignedTransaction consists of
+(Bob), in the form of a HashedTransaction. This HashedTransaction consists of
 the Transaction, as well as a hash of the transaction in hexadecimal. This hash is
 then signed with Alice's private key, and then redistributed.
 
