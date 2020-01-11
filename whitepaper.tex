@@ -54,9 +54,8 @@ broadcasts to all nodes she knows that she has a transaction to the recipient
 the Transaction, as well as a hash of the transaction in hexadecimal. This hash is
 then signed with Alice's private key, and then redistributed.
 
-\paragraph{Account Creation.} Transactions to account
-{\texttt{F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F\-F}}
-are considered to create accounts. A transaction to this account MUST have a
+\paragraph{Account Creation.} Transactions to account 0 are considered to
+create accounts. A transaction to this account MUST have a
 description matching the regular expression \verb~[a-zA-Z0-9_-]*|[a-zA-Z0-9+/=]+~
 The part preceding the pipe shall be considered the username. As a result of
 the wildcard, if the username is blank (nothing preceding the pipe) then it
@@ -75,10 +74,7 @@ be propagated.
 \paragraph{Verifying a Transaction.} A transaction is to be verified by first
 checking if the chain identifier (chainid) is equal to what is
 expected\footnote{$0$ shall be used on the main network.}. It shall also be
-checked that the wallet exists, is
-{\texttt{00112233445566778899AABBCCDDEE\-FF00112233445566778899AABBCCDDEE00}}
-or is
-{\texttt{000000000000000000000000000000\-0000000000000000000000000000000000}}.
+checked that the wallet exists.
 This can be done by looking in the chain to see if a special transaction
 as described above happened with the hash\footnote{It may be useful to cache
 this, thus preventing unnecessary hash computing.}. If the wallet does not
