@@ -46,13 +46,14 @@ or from this API should be in JSON\footnote{See \url{https://json.org}}.
 
 \paragraph{Creating a Transaction.} To create a transaction, the sender (Alice)
 broadcasts to all nodes she knows that she has a transaction to the recipient
-(Bob), in the form of a HashedTransaction. This HashedTransaction consists of
-the Transaction, as well as a hash of the transaction in hexadecimal. This hash is
-then signed with Alice's private key, and then redistributed.
+(Bob), in the form of a HashedTransaction.  This hash is then signed with
+Alice's private key, and then redistributed.
 
 \paragraph{Account Creation.} An application shall use an AccountCreation
 message to create an account. \verb|publickey| should be set to the Base64'd
 public key. The wallet will be identified by the key's hash.
+
+\paragraph{Signing.} Signing and account keys should be valid PGP keys.
 
 \label{prop}
 \paragraph{Propagating a Transaction.} A signed transaction is to be sent to all
@@ -134,8 +135,8 @@ syntax = "proto3";
 \subsection{Transaction}
 \begin{lstlisting}
 message Transaction {
-	required string sender;    // The sender's public key in Base64
-	required string recipient; // The hash of the recipient's public key
+	required string sender;    // The sender's public key, ASCII-armoured
+	required string recipient; // The hash of the recipient's public key (hexadecimal)
 	required double currency;  // The currency to send. No more than 16 decimal points.
 	required string message;   // The associated message in UTF-8.
 }
